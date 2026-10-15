@@ -16,17 +16,17 @@
 
 ## 安装
 
-本 Skill 属于 [weaver-evolve 技能集群](https://github.com/2021291696/weaver-evolve)：
+本 Skill 属于 [weaver-evolve 技能集群](https://github.com/solplum/weaver-evolve)：
 
 ```bash
-git clone https://github.com/2021291696/weaver-evolve.git
+git clone https://github.com/solplum/weaver-evolve.git
 cd weaver-evolve && bash install.sh
 ```
 
 单独安装：
 
 ```bash
-git clone https://github.com/2021291696/file-tidy.git
+git clone https://github.com/solplum/file-tidy.git
 cp -r file-tidy/ ~/.claude/skills/file-tidy/
 ```
 
