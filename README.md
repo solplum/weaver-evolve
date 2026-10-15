@@ -78,7 +78,7 @@ The installers support `codex`, `claude`, or `all`. The default is `all` so both
 #### macOS / Linux
 
 ```bash
-git clone https://github.com/2021291696/weaver-evolve.git
+git clone https://github.com/solplum/weaver-evolve.git
 cd weaver-evolve
 
 # Install both editions
@@ -99,7 +99,7 @@ bash install.sh --platform codex --force
 #### Windows PowerShell
 
 ```powershell
-git clone https://github.com/2021291696/weaver-evolve.git
+git clone https://github.com/solplum/weaver-evolve.git
 Set-Location weaver-evolve
 
 # Install both editions
@@ -211,7 +211,7 @@ Other experimental or historical content may exist in the repository, but it is 
 #### macOS / Linux
 
 ```bash
-git clone https://github.com/2021291696/weaver-evolve.git
+git clone https://github.com/solplum/weaver-evolve.git
 cd weaver-evolve
 
 bash install.sh                    # 两套都安装
@@ -222,7 +222,7 @@ bash install.sh --platform claude  # 只安装 Claude Code 版
 #### Windows PowerShell
 
 ```powershell
-git clone https://github.com/2021291696/weaver-evolve.git
+git clone https://github.com/solplum/weaver-evolve.git
 Set-Location weaver-evolve
 
 .\install.ps1                   # 两套都安装
