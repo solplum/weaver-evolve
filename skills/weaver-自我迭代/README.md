@@ -23,10 +23,10 @@
 
 ## 安装
 
-本 Skill 属于 [weaver-evolve 技能集群](https://github.com/2021291696/weaver-evolve)：
+本 Skill 属于 [weaver-evolve 技能集群](https://github.com/solplum/weaver-evolve)：
 
 ```bash
-git clone https://github.com/2021291696/weaver-evolve.git
+git clone https://github.com/solplum/weaver-evolve.git
 cd weaver-evolve && bash install.sh
 ```
 
@@ -46,4 +46,4 @@ cd weaver-evolve && bash install.sh
 | [debug-architect](../debug-architect/) | 子 Skill — 错误复盘 |
 | [skill-optimizer](../skill-optimizer/) | 兄弟 — Skill 级优化 |
 
-独立仓库：[file-tidy](https://github.com/2021291696/file-tidy) · [memory-keeper](https://github.com/2021291696/memory-keeper) · [debug-architect](https://github.com/2021291696/debug-architect) · [skill-optimizer](https://github.com/2021291696/skill-optimizer)
+独立仓库：[file-tidy](https://github.com/solplum/file-tidy) · [memory-keeper](https://github.com/solplum/memory-keeper) · [debug-architect](https://github.com/solplum/debug-architect) · [skill-optimizer](https://github.com/solplum/skill-optimizer)
