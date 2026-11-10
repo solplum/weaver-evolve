@@ -1,0 +1,18 @@
+{
+  "review_window": {
+    "from": "2026-11-04T00:00:00+08:00",
+    "through": "2026-11-10T10:00:00+08:00"
+  },
+  "sources": [
+    {
+      "id": "harbor-events",
+      "path": "sources/events.jsonl",
+      "lifecycle": "active",
+      "snapshot": {
+        "last_event": "H003",
+        "all_events_through_boundary_available": true,
+        "captured_at": "2026-11-10T10:00:00+08:00"
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "review_window": {
+    "from": "2026-11-04T00:00:00+08:00",
+    "through": "2026-11-10T10:00:00+08:00"
+  },
+  "sources": [
+    {
+      "id": "atlas-events",
+      "path": "sources/events.jsonl",
+      "lifecycle": "running",
+      "snapshot": {
+        "last_event": "E006",
+        "all_events_through_boundary_available": true,
+        "captured_at": "2026-11-10T10:00:00+08:00"
+      }
+    },
+    {
+      "id": "prior-decisions",
+      "path": "sources/prior-decisions.md",
+      "lifecycle": "closed"
+    }
+  ]
+}

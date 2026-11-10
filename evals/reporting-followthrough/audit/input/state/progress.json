@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "revision": 2,
+  "sources": {
+    "harbor-events": {
+      "coverage": "complete",
+      "cursor": {
+        "covered_from": "2026-11-04T00:00:00+08:00",
+        "selection": "confirmed_knowledge",
+        "through_event": "H003",
+        "snapshot_at": "2026-11-10T10:00:00+08:00"
+      }
+    }
+  },
+  "candidates": {
+    "harbor:scatter-discussion": {
+      "source": "harbor-events",
+      "evidence": "sources/events.jsonl#H003",
+      "status": "pending",
+      "reason": "散点图是未决定的设想，不属于当前日趋势页方案。"
+    }
+  }
+}

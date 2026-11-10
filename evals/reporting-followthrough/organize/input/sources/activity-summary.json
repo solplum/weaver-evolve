@@ -1,0 +1,8 @@
+{
+  "collection_id": "f427a619-043e-4b9b-a6c3-365de052089e",
+  "scan_batch": "batch-7e6c0c75-133e-452d-afeb-e8925a70c0f9",
+  "indexed_events": 6,
+  "retained_transport_items": 42,
+  "source_pages": 3,
+  "notes": "活动元数据仅用于定位本批快照，不说明业务功能是否完成。"
+}
