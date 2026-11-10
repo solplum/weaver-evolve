@@ -1,261 +1,105 @@
-<div align="center">
+# lzl-weaver-evolve
 
-<img src="https://img.shields.io/badge/Agent%20Skills-4-blueviolet?style=flat-square" alt="4 agent skills">
-<img src="https://img.shields.io/badge/OpenAI%20Codex-First--class-111111?style=flat-square" alt="OpenAI Codex first-class support">
-<img src="https://img.shields.io/badge/Claude%20Code-First--class-D97757?style=flat-square" alt="Claude Code first-class support">
-<img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="MIT License">
+跨项目整理知识、规则与经验，把值得复用的内容放到正确位置，并保留来源、适用条件和处理进度。
 
-# weaver-evolve
+**所有支持技能的 Agent 使用同一套文件。** 不提供按产品区分的正文、目录或安装选项。运行时依据当前宿主提供的规则、工具、历史入口和记忆写入机制确定做法，不假定某个产品的配置路径或聊天格式。
 
-**A dual-platform knowledge-maintenance suite built for OpenAI Codex and Claude Code.**
+## 能做什么
 
-Codex-native skills and preserved Claude Code workflows for organizing agent instructions, project memory, files, and recurring debugging lessons.
+- 明确本次覆盖的项目、数据源和时间范围，区分已读、部分读取和不可读。
+- 提炼稳定偏好、项目决策、成功方法、有效工具经验、用户纠正及错误教训；一次明确且重要的决定也可以保留。
+- 区分执行规则、全局偏好、项目背景和通用知识，复用已有存放机制。
+- 检查同一结论的适用范围、冲突、旧版本和关联引用，避免把项目例外升级为全局规则。
+- 跟踪各来源的扫描位置及待处理事项；未读取的来源不前移，待确认事项不会随扫描进度丢失。
+- 根据已有授权推进工作，集中提出真正影响判断的问题，交付实际变更和未完成事项。
 
-[English](#english) · [中文](#中文)
+主技能自包含。以下三个配套技能可以独立使用，也可按任务需要配合：
 
-</div>
-
----
-
-<a id="english"></a>
-
-## English
-
-### Overview
-
-**weaver-evolve** is designed around two first-class coding-agent environments:
-
-- **OpenAI Codex** — dedicated skills built around `AGENTS.md`, `.codex/config.toml`, `$skill-name`, and Codex skill directories.
-- **Claude Code** — the original workflows remain available with their native `CLAUDE.md`, `.claude`, and session conventions.
-
-The two editions share the same four responsibilities, but they are not a blind copy of one another. Each edition uses the host platform's own instruction hierarchy, configuration paths, invocation model, and available context.
-
-### Included Skills
-
-| Skill | Purpose |
+| 技能 | 用途 |
 |---|---|
-| **weaver-自我迭代** | Coordinates periodic cross-project knowledge maintenance and turns repeated work into durable guidance. |
-| **memory-keeper** | Handles immediate remember, forget, and memory-reorganization requests. |
-| **file-tidy** | Learns an existing directory structure before proposing safe file moves or cleanup. |
-| **debug-architect** | Converts recurring errors into root-cause records, prevention rules, and skill improvements. |
+| `lzl-weaver-evolve` | 跨项目知识整理与经验提炼，主入口 |
+| `memory-keeper` | 明确的记住、忘掉和记忆结构整理 |
+| `file-tidy` | 按现有结构分析并归位文件 |
+| `debug-architect` | 复盘已发生的错误及预防措施 |
 
-### Platform Editions
+主技能调用配套技能时传递当前范围、来源和授权；配套技能不存在或与环境不兼容时，按主技能流程继续可完成的工作。
 
-| Capability | OpenAI Codex edition | Claude Code edition |
-|---|---|---|
-| Skill source | `skills/codex/<skill>/` | `skills/<skill>/` |
-| Personal skill directory | `~/.agents/skills/` | `~/.claude/skills/` |
-| Repository skill directory | `.agents/skills/` | `.claude/skills/` |
-| Durable project guidance | `AGENTS.md` | `CLAUDE.md` |
-| Personal guidance | `~/.codex/AGENTS.md` | `~/.claude/CLAUDE.md` |
-| Configuration | `~/.codex/config.toml`, `.codex/config.toml` | `~/.claude/settings.json` |
-| Explicit invocation | `$skill-name` | `/skill-name` or the host's skill invocation flow |
+## 安装
 
-### How the Skills Work Together
-
-```mermaid
-flowchart TD
-    W["weaver-自我迭代<br/>periodic coordinator"]
-    M["memory-keeper<br/>memory operations"]
-    F["file-tidy<br/>filesystem organization"]
-    D["debug-architect<br/>error retrospectives"]
-    C["Codex edition<br/>AGENTS.md + .codex"]
-    H["Claude Code edition<br/>CLAUDE.md + .claude"]
-
-    W --> M
-    W --> F
-    W --> D
-    C --> W
-    H --> W
-```
-
-You can use each skill independently. `weaver-自我迭代` acts as the periodic coordinator when you want a broader maintenance pass.
-
-### Installation
-
-The installers support `codex`, `claude`, or `all`. The default is `all` so both first-class editions are installed.
-
-#### macOS / Linux
+需要 Python 3.9+。先确认当前宿主实际加载技能的目录，将其作为 `--dest` 传入；安装器不会猜测产品或写入多个位置。
 
 ```bash
 git clone https://github.com/solplum/weaver-evolve.git
 cd weaver-evolve
 
-# Install both editions
-bash install.sh
+# 查看计划；不会创建目录或修改文件
+python3 scripts/install.py --dest "/path/to/your/skills" --dry-run
 
-# Or install one edition
-bash install.sh --platform codex
-bash install.sh --platform claude
+# 只安装主技能
+python3 scripts/install.py --dest "/path/to/your/skills"
+
+# 同时安装三个可选配套技能
+python3 scripts/install.py --dest "/path/to/your/skills" --all
 ```
 
-Use `--dry-run` to inspect the plan and `--force` to replace existing skill directories:
+`bash install.sh` 是同一安装器的入口，参数完全相同。PowerShell 入口使用本机 Python 执行同一文件：
+
+```powershell
+.\install.ps1 -Dest "D:\path\to\skills" -DryRun
+.\install.ps1 -Dest "D:\path\to\skills" -All
+```
+
+安装脚本的外壳只解决操作系统的启动方式，安装的技能文件始终相同。
+
+### 更新、旧名迁移与备份
+
+已存在的技能默认跳过。明确要更新时，加 `--force`：
 
 ```bash
-bash install.sh --platform all --dry-run
-bash install.sh --platform codex --force
+python3 scripts/install.py --dest "/path/to/your/skills" --force
 ```
 
-#### Windows PowerShell
+若目标目录中存在旧主技能 `weaver-自我迭代`，这次更新会将它备份并迁移为 `lzl-weaver-evolve`，避免新旧名字同时被加载。没有 `--force` 时保留原件，跳过主技能。
 
-```powershell
-git clone https://github.com/solplum/weaver-evolve.git
-Set-Location weaver-evolve
+备份位于 `--dest` 父目录下的 `.lzl-weaver-evolve-backups/<时间>-<唯一标识>/`，具体绝对路径会打印出来。它在技能扫描目录之外；已有的自定义文件也随原目录完整保留。安装前会验证全部选中来源，文件复制完成后才替换目录；替换阶段失败会尝试恢复整批原目录。
 
-# Install both editions
-.\install.ps1
+需要回退时，先将当前版本移出宿主扫描范围，再把备份中的对应目录移回 `--dest`。恢复旧名时也先移出新主技能，以免重复加载。安装器拒绝源仓库与目标互相包含、符号链接目标或来源，以及非目录的既有技能路径。
 
-# Or install one edition
-.\install.ps1 -Platform Codex
-.\install.ps1 -Platform Claude
+## 使用
+
+在支持显式技能引用的宿主中使用 `lzl-weaver-evolve`；也可以直接提出自然语言请求：
+
+```text
+使用 lzl-weaver-evolve，整理这两个项目过去一周的知识和决策。
+全局整理：先查看上次未完成事项，再处理新增内容。
+把近期有效的工作方法提炼出来，保留适用条件和来源。
 ```
 
-Use `-DryRun` to inspect the plan and `-Force` to replace existing skill directories:
+仅要求评估时交付候选和建议；明确授权整理时按授权执行。宿主托管或自动生成的记忆遵循其指定接口，不直接改写生成文件。缺少历史入口时报告实际覆盖范围，使用可用来源，不把局部检查宣称为全局完成。
 
-```powershell
-.\install.ps1 -Platform All -DryRun
-.\install.ps1 -Platform Codex -Force
+## 仓库结构与验证
+
+```text
+skills/
+  lzl-weaver-evolve/   # 唯一主技能正文与按需引用的资源
+  memory-keeper/       # 可选配套，单一版本
+  file-tidy/           # 可选配套，单一版本
+  debug-architect/     # 可选配套，单一版本
+scripts/install.py    # 统一安装器
+install.sh            # 启动入口
+install.ps1           # 启动入口
+tests/                # 安装及状态处理等行为验证
 ```
 
-Optional destination overrides:
+`skills/skill-optimizer` 是保留的历史独立内容，不在这四个技能的安装清单中。
 
 ```bash
-CODEX_SKILLS=/custom/codex/skills CLAUDE_SKILLS=/custom/claude/skills bash install.sh
+python3 -m unittest discover -s tests -v
+bash -n install.sh
 ```
 
-```powershell
-$env:CODEX_SKILLS = "D:\agent-skills\codex"
-$env:CLAUDE_SKILLS = "D:\agent-skills\claude"
-.\install.ps1
-```
+测试使用隔离的临时目录，不读取真实聊天、修改实际记忆或操作在线系统。安装行为覆盖干跑、默认与全套安装、已有副本保护、旧名迁移、备份、故障回滚及路径边界；技能判断质量还需通过具体任务和原始材料独立验证。
 
-### Usage
+## 许可证
 
-#### OpenAI Codex
-
-Codex can choose a skill from its description or you can invoke one explicitly:
-
-```text
-$weaver-自我迭代 review knowledge accumulated across my projects
-$memory-keeper remember that this repository uses uv instead of pip
-$file-tidy organize the misplaced files, but show me the plan first
-$debug-architect turn the recurring build failure into a prevention rule
-```
-
-Codex loads personal skills from `~/.agents/skills` and repository-specific skills from `.agents/skills`. If an installed skill is not visible immediately, restart Codex.
-
-#### Claude Code
-
-The original Claude Code edition is preserved under `skills/<skill>/` and installed into `~/.claude/skills` by default. Use the skill through Claude Code's custom-skill or command workflow, or ask for the task in natural language when your setup routes matching requests to skills.
-
-### Safety Model
-
-All four skills follow the same guardrails:
-
-1. **Inspect before changing** — understand current structure and instruction scope first.
-2. **Plan before destructive actions** — deletion, overwrite, broad moves, and durable rule changes require a clear preview and user confirmation.
-3. **Use the narrowest scope** — global rules are reserved for genuinely cross-project behavior.
-4. **Preserve evidence** — record sources and confidence when extracting lessons from history or errors.
-5. **Respect host capabilities** — do not invent session formats, configuration keys, or permission behavior that the active agent cannot verify.
-
-### Repository Layout
-
-```text
-weaver-evolve/
-├── skills/
-│   ├── codex/                    # Codex-native implementations
-│   │   ├── weaver-自我迭代/
-│   │   ├── file-tidy/
-│   │   ├── memory-keeper/
-│   │   └── debug-architect/
-│   ├── weaver-自我迭代/           # Claude Code implementations
-│   ├── file-tidy/
-│   ├── memory-keeper/
-│   └── debug-architect/
-├── install.sh                    # macOS/Linux dual-platform installer
-├── install.ps1                  # Windows dual-platform installer
-├── LICENSE
-└── README.md
-```
-
-Other experimental or historical content may exist in the repository, but it is not part of the active four-skill suite described or installed here.
-
----
-
-<a id="中文"></a>
-
-## 中文
-
-### 项目简介
-
-**weaver-evolve** 现在主要服务于两个一等平台：**OpenAI Codex** 与 **Claude Code**。
-
-- **Codex 版**是专门适配的实现，围绕 `AGENTS.md`、`.codex/config.toml`、`$skill-name`、`~/.agents/skills` 等 Codex 原生约定工作。
-- **Claude Code 版**保留原有实现，继续使用 `CLAUDE.md`、`.claude` 目录和 Claude Code 的上下文约定。
-
-两套版本共享四个核心职责，但不是把同一份文件机械复制到两个目录。每套 Skill 都按对应 Agent 的指令层级、配置位置、调用方式和可访问上下文进行编写。
-
-### 四个核心 Skill
-
-| Skill | 职责 |
-|---|---|
-| **weaver-自我迭代** | 定期执行跨项目知识整理，把重复工作和踩坑转化为长期规则。 |
-| **memory-keeper** | 即时处理“记住”“忘掉”和“整理记忆”等请求。 |
-| **file-tidy** | 先学习现有目录结构，再安全地提出文件归位和清理方案。 |
-| **debug-architect** | 复盘重复错误，沉淀根因、预防规则和 Skill 改进建议。 |
-
-### 安装
-
-安装脚本支持 `Codex`、`Claude` 或 `All`，默认安装两套版本。
-
-#### macOS / Linux
-
-```bash
-git clone https://github.com/solplum/weaver-evolve.git
-cd weaver-evolve
-
-bash install.sh                    # 两套都安装
-bash install.sh --platform codex   # 只安装 Codex 版
-bash install.sh --platform claude  # 只安装 Claude Code 版
-```
-
-#### Windows PowerShell
-
-```powershell
-git clone https://github.com/solplum/weaver-evolve.git
-Set-Location weaver-evolve
-
-.\install.ps1                   # 两套都安装
-.\install.ps1 -Platform Codex   # 只安装 Codex 版
-.\install.ps1 -Platform Claude  # 只安装 Claude Code 版
-```
-
-可以加 `--dry-run` / `-DryRun` 只查看安装计划，加 `--force` / `-Force` 覆盖已有 Skill。
-
-### Codex 中使用
-
-Codex 可以根据 `description` 自动匹配，也可以显式使用 `$skill-name`：
-
-```text
-$weaver-自我迭代 做一次跨项目知识整理
-$memory-keeper 记住这个仓库统一使用 uv
-$file-tidy 整理放错位置的文件，先给计划
-$debug-architect 复盘最近重复出现的构建错误
-```
-
-### Claude Code 中使用
-
-Claude Code 原版位于 `skills/<skill>/`，默认安装到 `~/.claude/skills/`。可以继续通过 Claude Code 的自定义 Skill、命令路由或自然语言触发方式使用。
-
-### 设计原则
-
-- Codex 与 Claude Code 都是一等平台，不把其中一个仅作为“兼容目标”。
-- 平台相关概念分别实现，避免把 `CLAUDE.md` 直接套到 Codex，或把 `AGENTS.md` 强行套到 Claude Code。
-- 全局规则保持克制；信息不确定时优先放到更窄的项目范围。
-- 删除、覆盖、跨目录移动和长期规则写入之前，先展示方案并获取确认。
-- 无法验证的平台能力必须明确说明限制，不能虚构 session 格式或配置行为。
-
-## License / 许可证
-
-This project is licensed under the [MIT License](./LICENSE).
-本项目采用 [MIT License](./LICENSE)。
+[MIT](LICENSE)

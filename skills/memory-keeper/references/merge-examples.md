@@ -1,126 +1,36 @@
-# 融入实操示例
+# 合并与更正案例
 
-## 正例
+## 重复规则和不同受众
 
-### 更新用户画像（原处修改）
+全局规则要求 Python 项目统一使用某个包管理器；项目规则重复同一句话；开发文档包含具体操作步骤。
 
-旧 `user-profile.md`:
-```markdown
-## 本地开发环境
-- JDK 21 (Eclipse Adoptium)
-- Maven 3.9
-```
+保留全局约束与开发步骤，项目规则只保留真实差异。不同受众的必要说明并非必须删除的重复。
 
-新信息：*"记住：JDK 升级到 24 了"*
+## 局部例外
 
-✅ 正确：
-```markdown
-## 本地开发环境
-- JDK 24 (Eclipse Adoptium)
-- Maven 3.9
-```
+全局偏好使用工具 A，某项目因兼容限制采用 B。项目决定记录兼容条件与范围，全局偏好继续有效。不能仅因 B 的记录更新，就将全局偏好替换为 B。
 
-❌ 错误：
-```markdown
-## 本地开发环境
-- JDK 21 (Eclipse Adoptium)
-- Maven 3.9
+## 新决定替换当前结论
 
-## 更新（2026-05-17）
-- JDK 已升级到 24
-```
+项目明确从存储 A 迁移到 B：
 
-### 互补信息建立链接
+1. 更新权威决策及生效条件。
+2. 检查已知摘要、索引、操作说明中仍被当作当前事实的 A。
+3. 保留有用历史设计，并标明已被替代。
+4. 配置是否真正迁移需要运行时证据；仅更新记忆不能宣称迁移已完成。
 
-已有 `reference-dev-credentials.md` 记录 MySQL 凭据。
+## 全局稳定偏好
 
-新信息：*"记住：MySQL 连接池用 HikariCP，最大 20 连接"*
+“以后回复先给结论”属于跨项目协作偏好。存到当前环境支持的全局偏好机制；不因为恰好在项目 A 中说出，就只保存在 A；不为写入方便而修改无关运行配置。
 
-✅ 正确：创建新文件 `mysql-connection-pool.md`，文中引用 `[[reference-dev-credentials.md]]`
-❌ 错误：把连接池配置塞进 `reference-dev-credentials.md`（混淆了凭据和配置两个不同概念）
+## 托管或自动生成记忆
 
-### 删除后整理
+平台提供摘要文件但规定通过增量笔记或专用工具更新时，向该入口提交更正，再检查回执。摘要尚未重新生成不代表写入失败，也不能通过手改摘要伪装成系统已接收。
 
-`MEMORY.md`:
-```markdown
-- [MySQL 端口](mysql-port.md) — 开发环境端口
-- [JDK 配置](jdk-setup.md) — JDK 路径
-- [HikariCP 配置](hikari-config.md) — 连接池
-```
+## 忘掉及残留
 
-用户说：*"忘掉：MySQL 端口那个记忆"*
+用户明确要求删除一个旧端口记录，精确清理当前记忆与已知索引；同一数字用于其他服务时保留。报告可控范围内的删除结果，不承诺版本历史和外部副本同步擦除。
 
-✅ 正确：
-1. 删除 `mysql-port.md`
-2. 更新 `MEMORY.md` 移除对应行
-3. 检查：还剩 2 条，不孤立，不需合并
+## 不确定性
 
-如果 `hikari-config.md` 也被删了，只剩 `jdk-setup.md`：
-→ 建议用户："只剩一条 JDK 配置了，要不要合并到 user-profile.md？"
-
-## 反例
-
-### 盲目追加
-
-三次"记住"后，`user-profile.md` 末尾积压：
-```markdown
-- JDK 21
-...
-- 对了 JDK 升到 22 了
-- 现在用 JDK 23
-- 最终：JDK 24
-```
-→ 读者看到四个版本号，不知道该信哪个。
-
-### 不搜就写
-
-用户说"记住：项目用 MySQL"，agent 直接新建 `mysql-info.md`。
-但实际上 `dev-env.md` 里已经写了 MySQL 版本和端口。
-→ 同一个信息的两个碎片，后续 agent 可能看到一半。
-
-### 删了内容忘了索引
-
-删了 `mysql-port.md` 但 MEMORY.md 里还留着链接。
-→ 下次 agent 点过去 404。
-
-## 整理流程示例
-
-### 正例：去重合并（跨文件同信息）
-
-审计发现三个文件都记 MySQL 端口：
-- `mysql-port.md`：端口 3306
-- `dev-env.md`：MySQL 端口 3306
-- `reference-dev-credentials.md`：含端口 3306
-
-✅ 正确：
-1. 审计标注：`reference-dev-credentials.md` 最详细（含凭据+端口），其他两个重复
-2. 计划：删 `mysql-port.md`、`dev-env.md` 里移除端口行、`reference-dev-credentials.md` 保留
-3. 更新 MEMORY.md：移除 `mysql-port.md` 链接
-4. 验证：`grep -r "3306"` 只剩 `reference-dev-credentials.md` 一处
-
-❌ 错误：三个都保留，读者不知信哪个。
-
-### 正例：跨文件关联（同根因未互链）
-
-审计发现：
-- `pyinstaller-chinese-path.md`：PyInstaller 中文路径报错
-- `docling-gbk-reconfigure.md`：docling GBK 编码 reconfigure
-
-两者同根因（Windows GBK 编码），但未互链。
-
-✅ 正确：
-1. 审计标注：关键词"GBK/编码"共现，同根因
-2. 计划：双向加 `[[wikilink]]`
-3. 执行：`pyinstaller-chinese-path.md` 末尾加 `> 相关：[[docling-gbk-reconfigure]]`；反向同理
-4. 验证：`grep "[[pyinstaller-chinese-path]]" docling-gbk-reconfigure.md` 有匹配，反向亦然
-
-❌ 错误：合并成一个文件（两者是不同工具的踩坑，强行合并混淆主题）。
-
-### 反例：整理时擅自提取新信息
-
-整理过程中读到一条"用户说以后都用 uv 不用 pip"。
-
-❌ 错误：整理时把这条写成新 memory 文件。
-→ 整理是结构重构，不是提取新信息（那是 weaver 的事）。
-
-✅ 正确：整理只动已有文件结构，新信息留给下次"记住"指令或 weaver 扫对话。
+看到两个互相矛盾且无生效条件的历史记录时，保留证据并询问决定性事实。把其中一个移到更窄层级并不能使它变真。

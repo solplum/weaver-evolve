@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "revision": 1,
+  "sources": {
+    "project-C": {
+      "coverage": "complete",
+      "cursor": "C:7"
+    },
+    "previous": {
+      "coverage": "complete",
+      "cursor": "previous:1"
+    }
+  },
+  "candidates": {
+    "previous:Z": {
+      "source": "previous",
+      "evidence": "sources/previous.md#Z",
+      "status": "pending",
+      "target": "projects/B/decisions.md",
+      "reason": "缺少跨项目适用证据"
+    }
+  }
+}

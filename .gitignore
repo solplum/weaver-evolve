@@ -7,3 +7,7 @@ desktop.ini
 .vscode/
 .idea/
 node_modules/
+__pycache__/
+*.pyc
+.lzl-weaver-evolve/
+.lzl-weaver-evolve-backups/

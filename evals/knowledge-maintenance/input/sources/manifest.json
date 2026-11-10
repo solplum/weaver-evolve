@@ -1,0 +1,23 @@
+{
+  "window": "2026-11-04..2026-11-10",
+  "sources": [
+    {
+      "id": "project-A",
+      "path": "sources/A.md",
+      "coverage": "complete",
+      "cursor": "A:4"
+    },
+    {
+      "id": "project-B",
+      "path": "sources/B.md",
+      "coverage": "complete",
+      "cursor": "B:3"
+    },
+    {
+      "id": "project-C",
+      "path": null,
+      "coverage": "unavailable",
+      "reason": "连接不可用；旧游标 C:7"
+    }
+  ]
+}
